@@ -19,6 +19,7 @@ X_train, X_test, y_train, y_test = np.load("./7obj.npy", allow_pickle=True)
 X_train = X_train.astype("float") / 256
 X_test  = X_test.astype("float")  / 256
 print('X_train shape:', X_train.shape)
+print('X_test shape:', X_test.shape)
 
 resNet101 = ResNet101(weights="imagenet", include_top=False, input_shape=(64, 64, 3))
 
@@ -44,7 +45,7 @@ if os.path.exists(hdf5_file):
     model.load_weights(hdf5_file)
 else:
     # 학습한 모델이 없으면 파일로 저장
-    model.fit(X_train, y_train, batch_size=32, epochs=10)
+    model.fit(X_train, y_train, batch_size=32, epochs=50)
     model.save_weights(hdf5_file)
 
 score = model.evaluate(X_test, y_test)
